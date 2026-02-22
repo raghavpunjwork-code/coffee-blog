@@ -3,573 +3,812 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Espresso Doctor — Diagnose My Shot</title>
+<title>Grounds & Glory — Coffee Meets Innovation</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --cream: #F5EDD6;
-    --espresso: #1A0A00;
-    --crema: #C8864A;
-    --caramel: #8B5E2E;
-    --dark-roast: #2D1500;
-    --light-crema: #E8C88A;
-    --steam: rgba(245, 237, 214, 0.08);
+    --ink: #0D0906;
+    --parchment: #F2E8D5;
+    --crema: #C9853F;
+    --rust: #7A3B1E;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
 
   body {
-    background: var(--espresso);
-    color: var(--cream);
-    font-family: 'Lora', Georgia, serif;
-    min-height: 100vh;
+    background: var(--ink);
+    color: var(--parchment);
+    font-family: 'Cormorant Garamond', Georgia, serif;
     overflow-x: hidden;
-    position: relative;
+    cursor: crosshair;
   }
 
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
     pointer-events: none;
-    z-index: 1000;
-    opacity: 0.6;
-  }
-
-  body::after {
-    content: '';
-    position: fixed;
-    top: -20%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 800px;
-    height: 600px;
-    background: radial-gradient(ellipse, rgba(200, 134, 74, 0.12) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 0;
-  }
-
-  .container {
-    max-width: 760px;
-    margin: 0 auto;
-    padding: 60px 24px 100px;
-    position: relative;
-    z-index: 1;
-  }
-
-  header {
-    text-align: center;
-    margin-bottom: 64px;
-    animation: fadeUp 0.8s ease both;
-  }
-
-  .eyebrow {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--crema);
-    opacity: 0.7;
-    margin-bottom: 16px;
-  }
-
-  h1 {
-    font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(42px, 8vw, 72px);
-    font-weight: 700;
-    line-height: 1.05;
-    color: var(--cream);
-    margin-bottom: 8px;
-  }
-
-  h1 em { font-style: italic; color: var(--crema); }
-
-  .subtitle {
-    font-family: 'Lora', serif;
-    font-style: italic;
-    font-size: 16px;
-    color: var(--cream);
-    opacity: 0.55;
-    margin-top: 16px;
-  }
-
-  .divider {
-    width: 48px;
-    height: 1px;
-    background: var(--crema);
-    opacity: 0.4;
-    margin: 28px auto 0;
-  }
-
-  .card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(200, 134, 74, 0.2);
-    border-radius: 2px;
-    padding: 48px;
-    animation: fadeUp 0.8s ease 0.15s both;
-  }
-
-  .question-block { margin-bottom: 40px; }
-  .question-block:last-of-type { margin-bottom: 48px; }
-
-  label {
-    display: block;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--crema);
-    margin-bottom: 16px;
-    opacity: 0.9;
-  }
-
-  .options-grid { display: flex; flex-wrap: wrap; gap: 10px; }
-
-  .option-btn {
-    background: transparent;
-    border: 1px solid rgba(200, 134, 74, 0.25);
-    color: var(--cream);
-    font-family: 'Lora', serif;
-    font-size: 14px;
-    padding: 10px 18px;
-    cursor: pointer;
-    border-radius: 1px;
-    transition: all 0.2s ease;
-    opacity: 0.7;
-  }
-
-  .option-btn:hover { border-color: var(--crema); opacity: 1; background: rgba(200, 134, 74, 0.08); }
-  .option-btn.selected { background: rgba(200, 134, 74, 0.18); border-color: var(--crema); color: var(--cream); opacity: 1; }
-  .option-btn.multi.selected { background: rgba(200, 134, 74, 0.2); border-color: var(--light-crema); }
-
-  textarea {
-    width: 100%;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(200, 134, 74, 0.2);
-    border-radius: 1px;
-    color: var(--cream);
-    font-family: 'Lora', serif;
-    font-size: 15px;
-    line-height: 1.6;
-    padding: 16px 20px;
-    resize: vertical;
-    min-height: 100px;
-    outline: none;
-    transition: border-color 0.2s;
-  }
-
-  textarea::placeholder { color: rgba(245, 237, 214, 0.25); }
-  textarea:focus { border-color: rgba(200, 134, 74, 0.6); }
-
-  .brew-setup { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-
-  .input-group { display: flex; flex-direction: column; gap: 8px; }
-
-  .input-group span {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
+    z-index: 9999;
     opacity: 0.5;
   }
 
-  .input-group input {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(200, 134, 74, 0.2);
-    border-radius: 1px;
-    color: var(--cream);
-    font-family: 'DM Mono', monospace;
-    font-size: 15px;
-    padding: 10px 14px;
-    outline: none;
-    transition: border-color 0.2s;
-    width: 100%;
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
   }
 
-  .input-group input:focus { border-color: rgba(200, 134, 74, 0.6); }
-  .input-group input::placeholder { color: rgba(245, 237, 214, 0.2); }
-
-  .diagnose-btn {
-    width: 100%;
-    padding: 18px;
-    background: var(--crema);
-    color: var(--espresso);
-    border: none;
-    font-family: 'Playfair Display', serif;
-    font-size: 18px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    cursor: pointer;
-    border-radius: 1px;
-    transition: all 0.25s ease;
+  .hero-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 60px 80px 80px;
+    position: relative;
+    z-index: 2;
   }
 
-  .diagnose-btn:hover { background: var(--light-crema); transform: translateY(-1px); box-shadow: 0 8px 32px rgba(200, 134, 74, 0.3); }
-  .diagnose-btn:active { transform: translateY(0); }
-  .diagnose-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
-
-  .loading-state { display: none; text-align: center; padding: 64px 0; animation: fadeUp 0.5s ease both; }
-  .loading-state.visible { display: block; }
-
-  .coffee-loader { font-size: 48px; animation: steam 1.5s ease-in-out infinite; display: block; margin-bottom: 20px; }
-
-  @keyframes steam {
-    0%, 100% { transform: translateY(0) rotate(-5deg); }
-    50% { transform: translateY(-8px) rotate(5deg); }
-  }
-
-  .loading-text {
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    letter-spacing: 0.2em;
+  .kicker {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.35em;
     text-transform: uppercase;
+    color: var(--crema);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.9s 0.1s ease forwards;
+  }
+
+  .hero-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(72px, 9vw, 130px);
+    line-height: 0.88;
+    letter-spacing: 0.01em;
+    color: var(--parchment);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 1s 0.25s ease forwards;
+  }
+
+  .hero-headline span { display: block; color: var(--crema); }
+
+  .hero-desc {
+    font-size: 18px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--parchment);
+    opacity: 0;
+    max-width: 380px;
+    margin-bottom: 52px;
+    animation: fadeUp 1s 0.4s ease forwards;
+  }
+
+  .hero-desc em { font-style: italic; color: var(--crema); }
+
+  .hero-cta-group {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 1s 0.55s ease forwards;
+  }
+
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--crema);
+    color: var(--ink);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 16px 28px;
+    transition: all 0.25s;
+    border: 2px solid var(--crema);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--parchment);
+    transform: translateX(-101%);
+    transition: transform 0.3s ease;
+    z-index: 0;
+  }
+
+  .btn-primary:hover::after { transform: translateX(0); }
+  .btn-primary:hover { border-color: var(--parchment); }
+  .btn-primary span { position: relative; z-index: 1; }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: transparent;
+    color: var(--parchment);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 16px 28px;
+    border: 1.5px solid rgba(242,232,213,0.25);
+    transition: all 0.25s;
+  }
+
+  .btn-secondary:hover { border-color: var(--crema); color: var(--crema); }
+
+  /* Right visual panel */
+  .hero-visual {
+    position: relative;
+    overflow: hidden;
+    background: var(--rust);
+  }
+
+  .coffee-ring {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(201,133,63,0.2);
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  .coffee-ring:nth-child(1) { width: 280px; height: 280px; top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .coffee-ring:nth-child(2) { width: 440px; height: 440px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 0.6s; border-color: rgba(201,133,63,0.12); }
+  .coffee-ring:nth-child(3) { width: 620px; height: 620px; top: 50%; left: 50%; transform: translate(-50%,-50%); animation-delay: 1.2s; border-color: rgba(201,133,63,0.06); }
+
+  .cup-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -52%);
+    font-size: 110px;
+    filter: drop-shadow(0 0 50px rgba(201,133,63,0.5));
+    animation: float 5s ease-in-out infinite;
+  }
+
+  .hero-visual-label {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(201,133,63,0.4);
+    writing-mode: vertical-rl;
+  }
+
+  .hero-visual::before {
+    content: '';
+    position: absolute;
+    left: -40px;
+    top: 0;
+    width: 80px;
+    height: 100%;
+    background: var(--ink);
+    clip-path: polygon(0 0, 40px 0, 100% 100%, 0 100%);
+    z-index: 2;
+  }
+
+  /* ── MARQUEE ── */
+  .marquee-wrapper {
+    overflow: hidden;
+    background: var(--crema);
+    padding: 14px 0;
+  }
+
+  .marquee-track {
+    display: flex;
+    gap: 60px;
+    animation: marquee 22s linear infinite;
+    white-space: nowrap;
+    width: max-content;
+  }
+
+  .marquee-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.08em;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 24px;
+  }
+
+  .marquee-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--rust); flex-shrink: 0; }
+
+  /* ── FEATURES ── */
+  .features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: rgba(242,232,213,0.07);
+  }
+
+  .feature-card {
+    padding: 60px 44px;
+    background: var(--ink);
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .feature-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 2px;
+    background: var(--crema);
+    transition: width 0.4s ease;
+  }
+
+  .feature-card:hover::after { width: 100%; }
+  .feature-card:hover { background: rgba(201,133,63,0.04); }
+
+  .card-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 80px;
+    color: rgba(201,133,63,0.1);
+    line-height: 1;
+    margin-bottom: 20px;
+    transition: color 0.3s;
+  }
+
+  .feature-card:hover .card-number { color: rgba(201,133,63,0.22); }
+
+  .card-icon { font-size: 34px; margin-bottom: 18px; }
+
+  .card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    letter-spacing: 0.04em;
+    color: var(--parchment);
+    margin-bottom: 14px;
+  }
+
+  .card-desc {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.65;
+    color: rgba(242,232,213,0.55);
+  }
+
+  /* ── ESPRESSO DOCTOR FEATURE ── */
+  .espresso-feature {
+    margin: 80px 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid rgba(201,133,63,0.2);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .espresso-feature::before {
+    content: '✦ FEATURED TOOL';
+    position: absolute;
+    top: 24px; right: 24px;
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    padding: 6px 14px;
+    background: var(--crema);
+    color: var(--ink);
+    z-index: 2;
+  }
+
+  .espresso-left {
+    padding: 64px 56px;
+    background: linear-gradient(135deg, rgba(122,59,30,0.12) 0%, transparent 60%);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .espresso-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--crema);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .espresso-tag::before {
+    content: '';
+    display: block;
+    width: 30px; height: 1px;
+    background: var(--crema);
+  }
+
+  .espresso-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(44px, 5vw, 74px);
+    line-height: 0.9;
+    color: var(--parchment);
+    margin-bottom: 24px;
+  }
+
+  .espresso-title em { display: block; color: var(--crema); font-style: normal; }
+
+  .espresso-desc {
+    font-size: 17px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(242,232,213,0.6);
+    margin-bottom: 36px;
+  }
+
+  .espresso-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    color: var(--crema);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 14px 24px;
+    border: 1.5px solid var(--crema);
+    transition: all 0.25s;
+    width: fit-content;
+  }
+
+  .espresso-link:hover { background: var(--crema); color: var(--ink); }
+  .espresso-link svg { transition: transform 0.2s; }
+  .espresso-link:hover svg { transform: translateX(4px); }
+
+  .espresso-right {
+    background: linear-gradient(145deg, var(--rust) 0%, #3A1A08 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px;
+    position: relative;
+  }
+
+  .ui-mockup {
+    background: rgba(13,9,6,0.75);
+    border: 1px solid rgba(201,133,63,0.25);
+    border-radius: 4px;
+    padding: 28px;
+    width: 100%;
+    max-width: 340px;
+    box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+    transform: perspective(800px) rotateY(-8deg) rotateX(4deg);
+    animation: levitate 4s ease-in-out infinite;
+  }
+
+  .mockup-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(201,133,63,0.15);
+  }
+
+  .mockup-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .mockup-dot:nth-child(1) { background: #FF5F57; }
+  .mockup-dot:nth-child(2) { background: #FFBD2E; }
+  .mockup-dot:nth-child(3) { background: #28CA41; }
+
+  .mockup-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--crema);
+    margin-bottom: 16px;
+  }
+
+  .mockup-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    color: rgba(242,232,213,0.35);
+    margin-bottom: 10px;
+    letter-spacing: 0.15em;
+  }
+
+  .mockup-row { display: flex; gap: 8px; margin-bottom: 8px; }
+
+  .mockup-chip {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    padding: 4px 10px;
+    border: 1px solid rgba(201,133,63,0.25);
+    color: rgba(242,232,213,0.4);
+    border-radius: 2px;
+  }
+
+  .mockup-chip.active {
+    background: rgba(201,133,63,0.15);
+    border-color: var(--crema);
+    color: var(--crema);
+  }
+
+  .mockup-diagnosis {
+    margin-top: 20px;
+    padding: 14px;
+    background: rgba(201,133,63,0.06);
+    border-left: 2px solid var(--crema);
+  }
+
+  .mockup-diagnosis-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    color: var(--crema);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .mockup-diagnosis-text {
+    font-size: 11px;
+    line-height: 1.55;
+    color: rgba(242,232,213,0.55);
+  }
+
+  /* ── PHILOSOPHY ── */
+  .philosophy {
+    padding: 100px 80px;
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 80px;
+    border-top: 1px solid rgba(242,232,213,0.07);
+  }
+
+  .philosophy-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--crema);
+    padding-top: 8px;
+  }
+
+  .philosophy-content blockquote {
+    font-size: clamp(24px, 3.2vw, 42px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.35;
+    color: var(--parchment);
+    margin-bottom: 32px;
+  }
+
+  .philosophy-content blockquote em { color: var(--crema); font-style: normal; }
+
+  .philosophy-content p {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(242,232,213,0.5);
+    max-width: 560px;
+  }
+
+  /* ── TOPICS ── */
+  .topics { padding: 0 80px 100px; }
+
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--crema);
+    margin-bottom: 16px;
+  }
+
+  .topics-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 56px;
+    letter-spacing: 0.03em;
+    color: var(--parchment);
+    margin-bottom: 40px;
+  }
+
+  .topic-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: rgba(242,232,213,0.07);
+  }
+
+  .topic-item {
+    background: var(--ink);
+    padding: 36px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: background 0.25s;
+    cursor: pointer;
+  }
+
+  .topic-item:hover { background: rgba(201,133,63,0.05); }
+
+  .topic-emoji { font-size: 30px; }
+
+  .topic-name {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--parchment);
+  }
+
+  .topic-count {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
     color: var(--crema);
     opacity: 0.6;
   }
 
-  .result-card { display: none; animation: fadeUp 0.6s ease both; margin-top: 40px; }
-  .result-card.visible { display: block; }
-
-  .result-header {
+  /* ── FOOTER ── */
+  footer {
+    padding: 60px 80px;
+    border-top: 1px solid rgba(242,232,213,0.07);
     display: flex;
     align-items: center;
-    gap: 16px;
-    margin-bottom: 32px;
-    padding-bottom: 24px;
-    border-bottom: 1px solid rgba(200, 134, 74, 0.2);
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
   }
 
-  .diagnosis-icon { font-size: 36px; flex-shrink: 0; }
-
-  .result-header h2 { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--cream); }
-
-  .result-header .verdict {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 30px;
+    letter-spacing: 0.05em;
     color: var(--crema);
-    opacity: 0.7;
+  }
+
+  .footer-tagline {
+    font-style: italic;
+    font-size: 14px;
+    color: rgba(242,232,213,0.3);
     margin-top: 4px;
   }
 
-  .result-body { font-size: 15px; line-height: 1.8; color: var(--cream); opacity: 0.85; }
-  .result-body p { margin-bottom: 16px; }
-  .result-body strong { color: var(--light-crema); font-weight: 600; }
+  .footer-links { display: flex; gap: 32px; }
 
-  .fix-list { list-style: none; margin: 20px 0; padding: 0; }
-
-  .fix-list li {
-    padding: 12px 16px 12px 44px;
-    position: relative;
-    border-left: 2px solid rgba(200, 134, 74, 0.3);
-    margin-bottom: 10px;
-    font-size: 14px;
-    line-height: 1.6;
-    background: rgba(200, 134, 74, 0.05);
-  }
-
-  .fix-list li::before {
-    content: attr(data-num);
-    position: absolute;
-    left: 12px;
-    top: 12px;
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    color: var(--crema);
-    font-weight: 500;
-  }
-
-  .reset-btn {
-    margin-top: 40px;
-    background: transparent;
-    border: 1px solid rgba(200, 134, 74, 0.3);
-    color: var(--cream);
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.2em;
+  .footer-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
-    padding: 12px 24px;
-    cursor: pointer;
-    border-radius: 1px;
-    transition: all 0.2s;
-    opacity: 0.6;
+    color: rgba(242,232,213,0.35);
+    text-decoration: none;
+    transition: color 0.2s;
   }
 
-  .reset-btn:hover { opacity: 1; border-color: var(--crema); }
+  .footer-links a:hover { color: var(--crema); }
 
-  .error-msg {
-    background: rgba(200, 80, 80, 0.1);
-    border: 1px solid rgba(200, 80, 80, 0.3);
-    color: #f5a0a0;
-    font-family: 'DM Mono', monospace;
-    font-size: 12px;
-    padding: 14px 18px;
-    border-radius: 1px;
-    margin-top: 16px;
-    display: none;
-  }
-
-  .error-msg.visible { display: block; }
-
-  footer {
-    text-align: center;
-    margin-top: 80px;
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--cream);
-    opacity: 0.2;
-    animation: fadeUp 0.8s ease 0.3s both;
-  }
-
+  /* ── ANIMATIONS ── */
   @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
+    from { opacity: 0; transform: translateY(24px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  @media (max-width: 600px) {
-    .card { padding: 32px 24px; }
-    .brew-setup { grid-template-columns: 1fr; }
-    h1 { font-size: 40px; }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.6; transform: translate(-50%,-50%) scale(1); }
+    50% { opacity: 1; transform: translate(-50%,-50%) scale(1.04); }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translate(-50%, -52%); }
+    50% { transform: translate(-50%, -58%); }
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  @keyframes levitate {
+    0%, 100% { transform: perspective(800px) rotateY(-8deg) rotateX(4deg) translateY(0); }
+    50% { transform: perspective(800px) rotateY(-8deg) rotateX(4deg) translateY(-10px); }
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-visual { display: none; }
+    .hero-text { padding: 80px 32px; }
+    .features { grid-template-columns: 1fr; }
+    .espresso-feature { grid-template-columns: 1fr; margin: 60px 32px; }
+    .espresso-right { min-height: 260px; }
+    .philosophy { grid-template-columns: 1fr; padding: 60px 32px; gap: 20px; }
+    .topics { padding: 0 32px 60px; }
+    .topic-grid { grid-template-columns: repeat(2, 1fr); }
+    footer { padding: 40px 32px; flex-direction: column; align-items: flex-start; }
   }
 </style>
 </head>
 <body>
-<div class="container">
 
-  <header>
-    <p class="eyebrow">☕ AI-Powered Espresso Diagnostics</p>
-    <h1>Diagnose My<br><em>Espresso</em></h1>
-    <p class="subtitle">Tell us what went wrong. We'll tell you how to fix it.</p>
-    <div class="divider"></div>
-  </header>
-
-  <div class="card" id="formCard">
-    <div class="question-block">
-      <label>How did it taste?</label>
-      <div class="options-grid" id="tasteOptions">
-        <button class="option-btn multi" data-group="taste" onclick="toggleMulti(this)">Too bitter</button>
-        <button class="option-btn multi" data-group="taste" onclick="toggleMulti(this)">Too sour / acidic</button>
-        <button class="option-btn multi" data-group="taste" onclick="toggleMulti(this)">Watery / weak</button>
-        <button class="option-btn multi" data-group="taste" onclick="toggleMulti(this)">Harsh / astringent</button>
-        <button class="option-btn multi" data-group="taste" onclick="toggleMulti(this)">Salty</button>
-        <button class="option-btn multi" data-group="taste" onclick="toggleMulti(this)">Bland / flat</button>
-        <button class="option-btn multi" data-group="taste" onclick="toggleMulti(this)">Burnt / smoky</button>
-        <button class="option-btn multi" data-group="taste" onclick="toggleMulti(this)">Too sweet / cloying</button>
-      </div>
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <p class="kicker">☕ Est. 2025 · Coffee & Innovation</p>
+    <h1 class="hero-headline">
+      Grounds<br>
+      <span>&</span><br>
+      Glory
+    </h1>
+    <p class="hero-desc">
+      Where the <em>science of extraction</em> meets the future of flavour.
+      Deep dives into specialty coffee, fermentation frontiers,
+      AI-powered brewing tools, and the culture of craft.
+    </p>
+    <div class="hero-cta-group">
+      <a href="https://raghavpunjwork-code.github.io/coffee-blog/" class="btn-primary" target="_blank">
+        <span>☕ Try Espresso Doctor</span>
+      </a>
+      <a href="#features" class="btn-secondary">Explore the Blog</a>
     </div>
-
-    <div class="question-block">
-      <label>What did the shot look like?</label>
-      <div class="options-grid">
-        <button class="option-btn multi" data-group="appearance" onclick="toggleMulti(this)">Pale / blond crema</button>
-        <button class="option-btn multi" data-group="appearance" onclick="toggleMulti(this)">Dark / tiger-striped crema</button>
-        <button class="option-btn multi" data-group="appearance" onclick="toggleMulti(this)">No crema at all</button>
-        <button class="option-btn multi" data-group="appearance" onclick="toggleMulti(this)">Thick crema</button>
-        <button class="option-btn multi" data-group="appearance" onclick="toggleMulti(this)">Thin / watery stream</button>
-        <button class="option-btn multi" data-group="appearance" onclick="toggleMulti(this)">Fast gushing pour</button>
-        <button class="option-btn multi" data-group="appearance" onclick="toggleMulti(this)">Slow dripping pour</button>
-        <button class="option-btn multi" data-group="appearance" onclick="toggleMulti(this)">Uneven / channeling</button>
-      </div>
-    </div>
-
-    <div class="question-block">
-      <label>Shot time / brew setup</label>
-      <div class="brew-setup">
-        <div class="input-group">
-          <span>Shot time (sec)</span>
-          <input type="number" id="shotTime" placeholder="e.g. 25" min="0" max="120">
-        </div>
-        <div class="input-group">
-          <span>Dose (grams)</span>
-          <input type="number" id="dose" placeholder="e.g. 18" min="0" max="30">
-        </div>
-        <div class="input-group">
-          <span>Yield (grams)</span>
-          <input type="number" id="yield" placeholder="e.g. 36" min="0" max="100">
-        </div>
-      </div>
-    </div>
-
-    <div class="question-block">
-      <label>Grind setting change?</label>
-      <div class="options-grid">
-        <button class="option-btn" data-group="grind" onclick="selectOne(this)">Coarser than usual</button>
-        <button class="option-btn" data-group="grind" onclick="selectOne(this)">Finer than usual</button>
-        <button class="option-btn" data-group="grind" onclick="selectOne(this)">Same as always</button>
-        <button class="option-btn" data-group="grind" onclick="selectOne(this)">Not sure</button>
-      </div>
-    </div>
-
-    <div class="question-block">
-      <label>Anything else? (optional)</label>
-      <textarea id="extraNotes" placeholder="New beans, changed something in your workflow, different water temp, etc..."></textarea>
-    </div>
-
-    <button class="diagnose-btn" onclick="diagnose()" id="diagnoseBtn">
-      Diagnose My Shot →
-    </button>
-    <div class="error-msg" id="errorMsg"></div>
   </div>
 
-  <div class="loading-state" id="loadingState">
-    <span class="coffee-loader">☕</span>
-    <p class="loading-text">Consulting the barista...</p>
+  <div class="hero-visual">
+    <div class="coffee-ring"></div>
+    <div class="coffee-ring"></div>
+    <div class="coffee-ring"></div>
+    <div class="cup-icon">☕</div>
+    <div class="hero-visual-label">Grounds & Glory · Est. 2025</div>
   </div>
+</section>
 
-  <div class="result-card" id="resultCard">
-    <div class="result-header">
-      <div class="diagnosis-icon" id="diagnosisIcon">🔍</div>
-      <div>
-        <h2 id="diagnosisTitle">Diagnosis</h2>
-        <p class="verdict" id="diagnosisVerdict"></p>
-      </div>
-    </div>
-    <div class="result-body" id="resultBody"></div>
-    <button class="reset-btn" onclick="reset()">← Diagnose Another Shot</button>
+<!-- MARQUEE -->
+<div class="marquee-wrapper">
+  <div class="marquee-track">
+    <div class="marquee-item"><span class="marquee-dot"></span>Specialty Coffee</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>AI Brewing Tools</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Espresso Science</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Fermentation</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Origin Stories</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Innovation</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Craft Culture</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Specialty Coffee</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>AI Brewing Tools</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Espresso Science</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Fermentation</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Origin Stories</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Innovation</div>
+    <div class="marquee-item"><span class="marquee-dot"></span>Craft Culture</div>
   </div>
-
 </div>
 
+<!-- THREE PILLARS -->
+<section class="features" id="features">
+  <div class="feature-card">
+    <div class="card-number">01</div>
+    <div class="card-icon">🔬</div>
+    <div class="card-title">The Science</div>
+    <p class="card-desc">Extraction theory, pressure profiling, water chemistry — we go deeper than the barista handbook dares.</p>
+  </div>
+  <div class="feature-card">
+    <div class="card-number">02</div>
+    <div class="card-icon">🤖</div>
+    <div class="card-title">AI & Innovation</div>
+    <p class="card-desc">From machine-learning roast curves to AI shot diagnostics — the future of coffee is already being pulled.</p>
+  </div>
+  <div class="feature-card">
+    <div class="card-number">03</div>
+    <div class="card-icon">🌍</div>
+    <div class="card-title">Origin & Culture</div>
+    <p class="card-desc">Farm-to-cup narratives, producer spotlights, and the communities growing something extraordinary.</p>
+  </div>
+</section>
+
+<!-- ESPRESSO DOCTOR FEATURE SECTION -->
+<div class="espresso-feature">
+  <div class="espresso-left">
+    <p class="espresso-tag">Featured Tool</p>
+    <h2 class="espresso-title">Espresso<em>Doctor</em></h2>
+    <p class="espresso-desc">
+      Your shot tastes wrong — but you don't know why. Describe what you're tasting, 
+      how it looked, the pull time, your dose. Our AI barista will diagnose your 
+      espresso and tell you exactly how to fix it.
+    </p>
+    <a href="https://raghavpunjwork-code.github.io/coffee-blog/" class="espresso-link" target="_blank">
+      Diagnose My Shot
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </div>
+  <div class="espresso-right">
+    <div class="ui-mockup">
+      <div class="mockup-bar">
+        <div class="mockup-dot"></div>
+        <div class="mockup-dot"></div>
+        <div class="mockup-dot"></div>
+      </div>
+      <div class="mockup-title">☕ ESPRESSO DOCTOR</div>
+      <div class="mockup-sub">HOW DID IT TASTE?</div>
+      <div class="mockup-row">
+        <div class="mockup-chip active">Too bitter</div>
+        <div class="mockup-chip">Too sour</div>
+        <div class="mockup-chip">Watery</div>
+      </div>
+      <div class="mockup-row">
+        <div class="mockup-chip">Harsh</div>
+        <div class="mockup-chip active">Burnt</div>
+        <div class="mockup-chip">Bland</div>
+      </div>
+      <div class="mockup-sub" style="margin-top:14px;">SHOT TIME: 38s · DOSE: 18g · YIELD: 36g</div>
+      <div class="mockup-diagnosis">
+        <div class="mockup-diagnosis-label">⚕ Diagnosis</div>
+        <div class="mockup-diagnosis-text">Over-extracted. Grind coarser by 2 clicks. Brew temp likely above 94°C — try 92°C.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PHILOSOPHY -->
+<section class="philosophy">
+  <div class="philosophy-label">Manifesto</div>
+  <div class="philosophy-content">
+    <blockquote>
+      "Every great cup is a <em>hypothesis tested</em>, a variable adjusted, a moment of clarity in a cloud of steam."
+    </blockquote>
+    <p>
+      Grounds & Glory was born from the belief that coffee and curiosity belong together. 
+      That the obsessive pursuit of the perfect extraction isn't so different from the 
+      scientific method — and that the best baristas have always been innovators. 
+      This is where those worlds collide.
+    </p>
+  </div>
+</section>
+
+<!-- TOPICS -->
+<section class="topics">
+  <p class="section-label">What we cover</p>
+  <h2 class="topics-title">Explore By Topic</h2>
+  <div class="topic-grid">
+    <div class="topic-item">
+      <div class="topic-emoji">⚗️</div>
+      <div class="topic-name">Extraction Science</div>
+      <div class="topic-count">Coming Soon</div>
+    </div>
+    <div class="topic-item">
+      <div class="topic-emoji">🤖</div>
+      <div class="topic-name">AI Tools</div>
+      <div class="topic-count">Live Now ↗</div>
+    </div>
+    <div class="topic-item">
+      <div class="topic-emoji">🍵</div>
+      <div class="topic-name">Brewing Methods</div>
+      <div class="topic-count">Coming Soon</div>
+    </div>
+    <div class="topic-item">
+      <div class="topic-emoji">🌱</div>
+      <div class="topic-name">Origin & Terroir</div>
+      <div class="topic-count">Coming Soon</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  <p>Espresso Doctor · Powered by Claude AI · Your coffee blog companion</p>
+  <div>
+    <div class="footer-logo">Grounds & Glory</div>
+    <div class="footer-tagline">Coffee meets innovation, one shot at a time.</div>
+  </div>
+  <div class="footer-links">
+    <a href="https://raghavpunjwork-code.github.io/coffee-blog/" target="_blank">Espresso Doctor</a>
+    <a href="#features">Blog</a>
+    <a href="#features">About</a>
+  </div>
 </footer>
 
-<script>
-  const selections = {};
-
-  function toggleMulti(btn) { btn.classList.toggle('selected'); }
-
-  function selectOne(btn) {
-    const group = btn.dataset.group;
-    document.querySelectorAll(`[data-group="${group}"]`).forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-  }
-
-  function getSelected(group) {
-    return [...document.querySelectorAll(`[data-group="${group}"].selected`)].map(b => b.textContent.trim());
-  }
-
-  async function diagnose() {
-    const taste = getSelected('taste');
-    const appearance = getSelected('appearance');
-    const grind = getSelected('grind');
-    const shotTime = document.getElementById('shotTime').value;
-    const dose = document.getElementById('dose').value;
-    const yieldG = document.getElementById('yield').value;
-    const notes = document.getElementById('extraNotes').value;
-
-    if (taste.length === 0 && appearance.length === 0) {
-      showError('Please select at least one taste or appearance descriptor.');
-      return;
-    }
-
-    hideError();
-    showLoading();
-
-    const brewInfo = [];
-    if (shotTime) brewInfo.push(`shot time: ${shotTime}s`);
-    if (dose) brewInfo.push(`dose: ${dose}g`);
-    if (yieldG) brewInfo.push(`yield: ${yieldG}g`);
-
-    const prompt = `You are an expert barista and espresso diagnostician. A home barista is describing problems with their espresso shot. Give them a warm, expert diagnosis with specific, actionable fixes. Be conversational but authoritative — like a helpful coffee shop mentor, not a textbook.
-
-Their shot details:
-- Taste issues: ${taste.length > 0 ? taste.join(', ') : 'not specified'}
-- Visual appearance: ${appearance.length > 0 ? appearance.join(', ') : 'not specified'}
-- Grind: ${grind.length > 0 ? grind[0] : 'not specified'}
-${brewInfo.length > 0 ? '- Brew numbers: ' + brewInfo.join(', ') : ''}
-${notes ? '- Additional notes: ' + notes : ''}
-
-Respond in this JSON format:
-{
-  "icon": "(single emoji that represents the diagnosis)",
-  "title": "(short catchy diagnosis title, e.g. 'Classic Over-Extraction' or 'Channeling Issue')",
-  "verdict": "(one line summary of the root cause)",
-  "explanation": "(2-3 sentences explaining why this happened, in plain english)",
-  "fixes": ["fix 1", "fix 2", "fix 3", "fix 4"],
-  "pro_tip": "(one extra advanced tip or insight)"
-}`;
-
-    try {
-      const response = await fetch('https://flat-glitter-ff02.raghavpunjwork.workers.dev', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          model: 'claude-sonnet-4-20250514',
-          max_tokens: 1000,
-          messages: [{ role: 'user', content: prompt }]
-        })
-      });
-
-      const data = await response.json();
-      const text = data.content?.map(c => c.text || '').join('') || '';
-      const jsonMatch = text.match(/\{[\s\S]*\}/);
-      if (!jsonMatch) throw new Error('Could not parse response');
-      const result = JSON.parse(jsonMatch[0]);
-      showResult(result);
-    } catch (err) {
-      hideLoading();
-      showError('Something went wrong diagnosing your shot. Please try again.');
-      console.error(err);
-    }
-  }
-
-  function showResult(result) {
-    hideLoading();
-    document.getElementById('diagnosisIcon').textContent = result.icon || '☕';
-    document.getElementById('diagnosisTitle').textContent = result.title || 'Diagnosis Complete';
-    document.getElementById('diagnosisVerdict').textContent = result.verdict || '';
-
-    const fixItems = (result.fixes || []).map((fix, i) =>
-      `<li data-num="${String(i+1).padStart(2,'0')}">${fix}</li>`
-    ).join('');
-
-    document.getElementById('resultBody').innerHTML = `
-      <p>${result.explanation || ''}</p>
-      ${fixItems ? `<strong style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;text-transform:uppercase;opacity:0.7;">How to fix it</strong><ul class="fix-list">${fixItems}</ul>` : ''}
-      ${result.pro_tip ? `<p style="margin-top:24px;padding:16px 20px;border-left:2px solid rgba(200,134,74,0.5);background:rgba(200,134,74,0.06);font-style:italic;opacity:0.8;"><strong style="font-style:normal;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.15em;text-transform:uppercase;">Pro tip </strong><br><br>${result.pro_tip}</p>` : ''}
-    `;
-
-    document.getElementById('formCard').style.display = 'none';
-    document.getElementById('resultCard').classList.add('visible');
-  }
-
-  function showLoading() {
-    document.getElementById('formCard').style.display = 'none';
-    document.getElementById('loadingState').classList.add('visible');
-    document.getElementById('diagnoseBtn').disabled = true;
-  }
-
-  function hideLoading() {
-    document.getElementById('loadingState').classList.remove('visible');
-    document.getElementById('diagnoseBtn').disabled = false;
-  }
-
-  function showError(msg) {
-    const el = document.getElementById('errorMsg');
-    el.textContent = msg;
-    el.classList.add('visible');
-    document.getElementById('formCard').style.display = 'block';
-  }
-
-  function hideError() { document.getElementById('errorMsg').classList.remove('visible'); }
-
-  function reset() {
-    document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
-    document.getElementById('shotTime').value = '';
-    document.getElementById('dose').value = '';
-    document.getElementById('yield').value = '';
-    document.getElementById('extraNotes').value = '';
-    document.getElementById('resultCard').classList.remove('visible');
-    document.getElementById('formCard').style.display = 'block';
-    hideError();
-    window.scrollTo({top: 0, behavior: 'smooth'});
-  }
-</script>
 </body>
 </html>
