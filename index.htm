@@ -28,7 +28,6 @@
     position: relative;
   }
 
-  /* Grain texture overlay */
   body::before {
     content: '';
     position: fixed;
@@ -39,7 +38,6 @@
     opacity: 0.6;
   }
 
-  /* Warm radial glow */
   body::after {
     content: '';
     position: fixed;
@@ -61,7 +59,6 @@
     z-index: 1;
   }
 
-  /* Header */
   header {
     text-align: center;
     margin-bottom: 64px;
@@ -87,10 +84,7 @@
     margin-bottom: 8px;
   }
 
-  h1 em {
-    font-style: italic;
-    color: var(--crema);
-  }
+  h1 em { font-style: italic; color: var(--crema); }
 
   .subtitle {
     font-family: 'Lora', serif;
@@ -109,7 +103,6 @@
     margin: 28px auto 0;
   }
 
-  /* Form card */
   .card {
     background: rgba(255,255,255,0.03);
     border: 1px solid rgba(200, 134, 74, 0.2);
@@ -118,13 +111,8 @@
     animation: fadeUp 0.8s ease 0.15s both;
   }
 
-  .question-block {
-    margin-bottom: 40px;
-  }
-
-  .question-block:last-of-type {
-    margin-bottom: 48px;
-  }
+  .question-block { margin-bottom: 40px; }
+  .question-block:last-of-type { margin-bottom: 48px; }
 
   label {
     display: block;
@@ -137,11 +125,7 @@
     opacity: 0.9;
   }
 
-  .options-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
+  .options-grid { display: flex; flex-wrap: wrap; gap: 10px; }
 
   .option-btn {
     background: transparent;
@@ -156,23 +140,9 @@
     opacity: 0.7;
   }
 
-  .option-btn:hover {
-    border-color: var(--crema);
-    opacity: 1;
-    background: rgba(200, 134, 74, 0.08);
-  }
-
-  .option-btn.selected {
-    background: rgba(200, 134, 74, 0.18);
-    border-color: var(--crema);
-    color: var(--cream);
-    opacity: 1;
-  }
-
-  .option-btn.multi.selected {
-    background: rgba(200, 134, 74, 0.2);
-    border-color: var(--light-crema);
-  }
+  .option-btn:hover { border-color: var(--crema); opacity: 1; background: rgba(200, 134, 74, 0.08); }
+  .option-btn.selected { background: rgba(200, 134, 74, 0.18); border-color: var(--crema); color: var(--cream); opacity: 1; }
+  .option-btn.multi.selected { background: rgba(200, 134, 74, 0.2); border-color: var(--light-crema); }
 
   textarea {
     width: 100%;
@@ -193,17 +163,9 @@
   textarea::placeholder { color: rgba(245, 237, 214, 0.25); }
   textarea:focus { border-color: rgba(200, 134, 74, 0.6); }
 
-  .brew-setup {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 12px;
-  }
+  .brew-setup { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
 
-  .input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
+  .input-group { display: flex; flex-direction: column; gap: 8px; }
 
   .input-group span {
     font-family: 'DM Mono', monospace;
@@ -229,7 +191,6 @@
   .input-group input:focus { border-color: rgba(200, 134, 74, 0.6); }
   .input-group input::placeholder { color: rgba(245, 237, 214, 0.2); }
 
-  /* Submit button */
   .diagnose-btn {
     width: 100%;
     padding: 18px;
@@ -243,41 +204,16 @@
     cursor: pointer;
     border-radius: 1px;
     transition: all 0.25s ease;
-    position: relative;
-    overflow: hidden;
   }
 
-  .diagnose-btn:hover {
-    background: var(--light-crema);
-    transform: translateY(-1px);
-    box-shadow: 0 8px 32px rgba(200, 134, 74, 0.3);
-  }
-
+  .diagnose-btn:hover { background: var(--light-crema); transform: translateY(-1px); box-shadow: 0 8px 32px rgba(200, 134, 74, 0.3); }
   .diagnose-btn:active { transform: translateY(0); }
+  .diagnose-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
 
-  .diagnose-btn:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-  }
-
-  /* Loading */
-  .loading-state {
-    display: none;
-    text-align: center;
-    padding: 64px 0;
-    animation: fadeUp 0.5s ease both;
-  }
-
+  .loading-state { display: none; text-align: center; padding: 64px 0; animation: fadeUp 0.5s ease both; }
   .loading-state.visible { display: block; }
 
-  .coffee-loader {
-    font-size: 48px;
-    animation: steam 1.5s ease-in-out infinite;
-    display: block;
-    margin-bottom: 20px;
-  }
+  .coffee-loader { font-size: 48px; animation: steam 1.5s ease-in-out infinite; display: block; margin-bottom: 20px; }
 
   @keyframes steam {
     0%, 100% { transform: translateY(0) rotate(-5deg); }
@@ -293,13 +229,7 @@
     opacity: 0.6;
   }
 
-  /* Result */
-  .result-card {
-    display: none;
-    animation: fadeUp 0.6s ease both;
-    margin-top: 40px;
-  }
-
+  .result-card { display: none; animation: fadeUp 0.6s ease both; margin-top: 40px; }
   .result-card.visible { display: block; }
 
   .result-header {
@@ -311,17 +241,9 @@
     border-bottom: 1px solid rgba(200, 134, 74, 0.2);
   }
 
-  .diagnosis-icon {
-    font-size: 36px;
-    flex-shrink: 0;
-  }
+  .diagnosis-icon { font-size: 36px; flex-shrink: 0; }
 
-  .result-header h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--cream);
-  }
+  .result-header h2 { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: var(--cream); }
 
   .result-header .verdict {
     font-family: 'DM Mono', monospace;
@@ -333,25 +255,11 @@
     margin-top: 4px;
   }
 
-  .result-body {
-    font-size: 15px;
-    line-height: 1.8;
-    color: var(--cream);
-    opacity: 0.85;
-  }
-
+  .result-body { font-size: 15px; line-height: 1.8; color: var(--cream); opacity: 0.85; }
   .result-body p { margin-bottom: 16px; }
+  .result-body strong { color: var(--light-crema); font-weight: 600; }
 
-  .result-body strong {
-    color: var(--light-crema);
-    font-weight: 600;
-  }
-
-  .fix-list {
-    list-style: none;
-    margin: 20px 0;
-    padding: 0;
-  }
+  .fix-list { list-style: none; margin: 20px 0; padding: 0; }
 
   .fix-list li {
     padding: 12px 16px 12px 44px;
@@ -390,10 +298,7 @@
     opacity: 0.6;
   }
 
-  .reset-btn:hover {
-    opacity: 1;
-    border-color: var(--crema);
-  }
+  .reset-btn:hover { opacity: 1; border-color: var(--crema); }
 
   .error-msg {
     background: rgba(200, 80, 80, 0.1);
@@ -409,7 +314,6 @@
 
   .error-msg.visible { display: block; }
 
-  /* Footer */
   footer {
     text-align: center;
     margin-top: 80px;
@@ -445,7 +349,6 @@
   </header>
 
   <div class="card" id="formCard">
-    <!-- Q1: Taste -->
     <div class="question-block">
       <label>How did it taste?</label>
       <div class="options-grid" id="tasteOptions">
@@ -460,7 +363,6 @@
       </div>
     </div>
 
-    <!-- Q2: Appearance -->
     <div class="question-block">
       <label>What did the shot look like?</label>
       <div class="options-grid">
@@ -475,7 +377,6 @@
       </div>
     </div>
 
-    <!-- Q3: Brew time -->
     <div class="question-block">
       <label>Shot time / brew setup</label>
       <div class="brew-setup">
@@ -494,7 +395,6 @@
       </div>
     </div>
 
-    <!-- Q4: Grind -->
     <div class="question-block">
       <label>Grind setting change?</label>
       <div class="options-grid">
@@ -505,7 +405,6 @@
       </div>
     </div>
 
-    <!-- Q5: Extra notes -->
     <div class="question-block">
       <label>Anything else? (optional)</label>
       <textarea id="extraNotes" placeholder="New beans, changed something in your workflow, different water temp, etc..."></textarea>
@@ -517,13 +416,11 @@
     <div class="error-msg" id="errorMsg"></div>
   </div>
 
-  <!-- Loading -->
   <div class="loading-state" id="loadingState">
     <span class="coffee-loader">☕</span>
     <p class="loading-text">Consulting the barista...</p>
   </div>
 
-  <!-- Result -->
   <div class="result-card" id="resultCard">
     <div class="result-header">
       <div class="diagnosis-icon" id="diagnosisIcon">🔍</div>
@@ -545,9 +442,7 @@
 <script>
   const selections = {};
 
-  function toggleMulti(btn) {
-    btn.classList.toggle('selected');
-  }
+  function toggleMulti(btn) { btn.classList.toggle('selected'); }
 
   function selectOne(btn) {
     const group = btn.dataset.group;
@@ -556,8 +451,7 @@
   }
 
   function getSelected(group) {
-    return [...document.querySelectorAll(`[data-group="${group}"].selected`)]
-      .map(b => b.textContent.trim());
+    return [...document.querySelectorAll(`[data-group="${group}"].selected`)].map(b => b.textContent.trim());
   }
 
   async function diagnose() {
@@ -602,7 +496,7 @@ Respond in this JSON format:
 }`;
 
     try {
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
+      const response = await fetch('https://flat-glitter-ff02.raghavpunjwork.workers.dev', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -614,11 +508,8 @@ Respond in this JSON format:
 
       const data = await response.json();
       const text = data.content?.map(c => c.text || '').join('') || '';
-      
-      // Parse JSON from response
       const jsonMatch = text.match(/\{[\s\S]*\}/);
       if (!jsonMatch) throw new Error('Could not parse response');
-      
       const result = JSON.parse(jsonMatch[0]);
       showResult(result);
     } catch (err) {
@@ -630,12 +521,11 @@ Respond in this JSON format:
 
   function showResult(result) {
     hideLoading();
-    
     document.getElementById('diagnosisIcon').textContent = result.icon || '☕';
     document.getElementById('diagnosisTitle').textContent = result.title || 'Diagnosis Complete';
     document.getElementById('diagnosisVerdict').textContent = result.verdict || '';
 
-    const fixItems = (result.fixes || []).map((fix, i) => 
+    const fixItems = (result.fixes || []).map((fix, i) =>
       `<li data-num="${String(i+1).padStart(2,'0')}">${fix}</li>`
     ).join('');
 
@@ -667,9 +557,7 @@ Respond in this JSON format:
     document.getElementById('formCard').style.display = 'block';
   }
 
-  function hideError() {
-    document.getElementById('errorMsg').classList.remove('visible');
-  }
+  function hideError() { document.getElementById('errorMsg').classList.remove('visible'); }
 
   function reset() {
     document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
