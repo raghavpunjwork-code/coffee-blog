@@ -55,57 +55,40 @@
 
   /* ── LOGO LOCKUP ── */
   .hero-logo-lockup {
-    display: flex;
-    align-items: center;
-    gap: 14px;
     margin-bottom: 18px;
     opacity: 0;
     animation: fadeUp 1s 0.15s ease forwards;
   }
 
-  .hero-logo-mark {
-    flex-shrink: 0;
-    width: 58px;
-    height: 58px;
-    filter: drop-shadow(0 0 8px rgba(201,133,63,0.35)) drop-shadow(0 4px 16px rgba(0,0,0,0.5));
-    animation: beanBreath 4s ease-in-out infinite;
-    transition: filter 0.4s;
-  }
-
-  .hero-logo-lockup:hover .hero-logo-mark {
-    filter: drop-shadow(0 0 18px rgba(201,133,63,0.65)) drop-shadow(0 4px 20px rgba(0,0,0,0.5));
-  }
-
-  @keyframes beanBreath {
-    0%, 100% { filter: drop-shadow(0 0 6px rgba(201,133,63,0.3)) drop-shadow(0 4px 14px rgba(0,0,0,0.5)); }
-    50%       { filter: drop-shadow(0 0 16px rgba(201,133,63,0.55)) drop-shadow(0 4px 18px rgba(0,0,0,0.5)); }
-  }
-
-  /* ── LOGO / HEADLINE — single line, refined serif ── */
+  /* ── HEADLINE — fills full left column width ── */
   .hero-headline {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(42px, 5.4vw, 80px);
+    font-size: clamp(42px, 8vw, 100px);
     font-weight: 900;
-    line-height: 1;
-    letter-spacing: -0.035em;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
     color: var(--parchment);
     white-space: nowrap;
     margin: 0;
+    width: 100%;
+    /* Scale to exactly fill the container */
+    display: block;
+    font-size: clamp(42px, 6.5vw, 96px);
   }
 
   .hero-headline .amp {
     color: var(--crema);
     font-style: italic;
     font-weight: 400;
-    letter-spacing: -0.045em;
+    letter-spacing: -0.05em;
   }
 
   .hero-sub-rule {
-    width: 48px;
+    width: 100%;
     height: 1.5px;
-    background: var(--crema);
-    margin-bottom: 22px;
-    margin-top: 18px;
+    background: linear-gradient(90deg, var(--crema) 0%, rgba(201,133,63,0.3) 100%);
+    margin-bottom: 24px;
+    margin-top: 20px;
     opacity: 0;
     animation: fadeUp 1s 0.35s ease forwards;
   }
@@ -141,8 +124,8 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: 14px;
     font-style: italic;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-transform: none;
     text-decoration: none;
     padding: 18px 32px;
     transition: all 0.3s;
@@ -175,8 +158,8 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: 14px;
     font-style: italic;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-transform: none;
     text-decoration: none;
     padding: 18px 32px;
     border: 1.5px solid rgba(242,232,213,0.2);
@@ -196,8 +179,8 @@
     font-family: 'Cormorant Garamond', serif;
     font-size: 13px;
     font-style: italic;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-transform: none;
     text-decoration: none;
     padding: 18px 32px;
     border: 1px dashed rgba(242,232,213,0.1);
@@ -926,78 +909,7 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-text">
-    <!-- Logo lockup: SVG mark + headline on same line -->
     <div class="hero-logo-lockup">
-      <svg class="hero-logo-mark" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <!-- Deep ambient glow behind the whole mark -->
-          <filter id="glowFilter" x="-40%" y="-40%" width="180%" height="180%">
-            <feGaussianBlur stdDeviation="3.5" result="blur"/>
-            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-          </filter>
-          <!-- Inner bean gradient: dark roast at base, lit from upper-left -->
-          <radialGradient id="lgBean" cx="34%" cy="26%" r="70%" gradientUnits="objectBoundingBox">
-            <stop offset="0%"   stop-color="#F0B97A"/>
-            <stop offset="30%"  stop-color="#C9853F"/>
-            <stop offset="70%"  stop-color="#8B4A1A"/>
-            <stop offset="100%" stop-color="#3D1A08"/>
-          </radialGradient>
-          <!-- Crema sheen overlay -->
-          <radialGradient id="lgSheen" cx="28%" cy="18%" r="55%" gradientUnits="objectBoundingBox">
-            <stop offset="0%"   stop-color="#F2E8D5" stop-opacity="0.32"/>
-            <stop offset="60%"  stop-color="#F2E8D5" stop-opacity="0.04"/>
-            <stop offset="100%" stop-color="#F2E8D5" stop-opacity="0"/>
-          </radialGradient>
-          <!-- Warm halo glow (rendered behind bean) -->
-          <radialGradient id="lgHalo" cx="50%" cy="50%" r="50%">
-            <stop offset="0%"   stop-color="#C9853F" stop-opacity="0.28"/>
-            <stop offset="100%" stop-color="#C9853F" stop-opacity="0"/>
-          </radialGradient>
-          <!-- Crease shadow -->
-          <linearGradient id="lgCrease" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%"   stop-color="#0D0906" stop-opacity="0.55"/>
-            <stop offset="50%"  stop-color="#0D0906" stop-opacity="0.35"/>
-            <stop offset="100%" stop-color="#0D0906" stop-opacity="0.5"/>
-          </linearGradient>
-        </defs>
-
-        <!-- Ambient halo behind bean -->
-        <ellipse cx="30" cy="32" rx="22" ry="20" fill="url(#lgHalo)"/>
-
-        <!-- THE BEAN — a proper hand-drawn coffee bean silhouette, tilted ~15deg -->
-        <!-- Outer bean shell -->
-        <path d="
-          M30 7
-          C 22 7, 14 13, 13 22
-          C 12 29, 15 35, 20 40
-          C 23 44, 27 47, 30 47
-          C 33 47, 38 44, 41 40
-          C 46 35, 48 29, 47 22
-          C 46 13, 38 7, 30 7 Z"
-          fill="url(#lgBean)" filter="url(#glowFilter)"/>
-
-        <!-- Crema sheen layer -->
-        <path d="
-          M30 7
-          C 22 7, 14 13, 13 22
-          C 12 29, 15 35, 20 40
-          C 23 44, 27 47, 30 47
-          C 33 47, 38 44, 41 40
-          C 46 35, 48 29, 47 22
-          C 46 13, 38 7, 30 7 Z"
-          fill="url(#lgSheen)"/>
-
-        <!-- Bean crease — the iconic S-curve groove, deep and precise -->
-        <!-- Shadow side of crease -->
-        <path d="M26 10 C29 17, 29 24, 26 31 C24 35, 24 40, 27 46"
-              stroke="#0D0906" stroke-width="2.8" stroke-linecap="round" fill="none" opacity="0.5"/>
-        <!-- Light edge of crease (gives 3D groove illusion) -->
-        <path d="M27.5 10.5 C30.5 17, 30.5 24, 27.5 31 C25.5 35, 25.5 40, 28.5 46"
-              stroke="#F0B97A" stroke-width="0.9" stroke-linecap="round" fill="none" opacity="0.25"/>
-
-        <!-- Tiny specular highlight dot — upper left, like light catching a glossy surface -->
-        <ellipse cx="21" cy="16" rx="3.5" ry="2" fill="#F2E8D5" opacity="0.18" transform="rotate(-20 21 16)"/>
-      </svg>
       <h1 class="hero-headline">Grounds <span class="amp">&</span> Glory</h1>
     </div>
     <div class="hero-sub-rule"></div>
@@ -1333,5 +1245,22 @@
   </div>
 </footer>
 
+<script>
+  // Make the headline exactly fill its container width
+  function fitHeadline() {
+    const el = document.querySelector('.hero-headline');
+    if (!el) return;
+    const container = el.closest('.hero-logo-lockup') || el.parentElement;
+    const maxW = container.clientWidth;
+    let size = 100;
+    el.style.fontSize = size + 'px';
+    while (el.scrollWidth > maxW && size > 20) {
+      size -= 1;
+      el.style.fontSize = size + 'px';
+    }
+  }
+  fitHeadline();
+  window.addEventListener('resize', fitHeadline);
+</script>
 </body>
 </html>
