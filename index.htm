@@ -53,52 +53,80 @@
     z-index: 2;
   }
 
+  /* ── LOGO LOCKUP ── */
+  .hero-logo-lockup {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 18px;
+    opacity: 0;
+    animation: fadeUp 1s 0.15s ease forwards;
+  }
+
+  .hero-logo-mark {
+    flex-shrink: 0;
+    width: 58px;
+    height: 58px;
+    filter: drop-shadow(0 0 8px rgba(201,133,63,0.35)) drop-shadow(0 4px 16px rgba(0,0,0,0.5));
+    animation: beanBreath 4s ease-in-out infinite;
+    transition: filter 0.4s;
+  }
+
+  .hero-logo-lockup:hover .hero-logo-mark {
+    filter: drop-shadow(0 0 18px rgba(201,133,63,0.65)) drop-shadow(0 4px 20px rgba(0,0,0,0.5));
+  }
+
+  @keyframes beanBreath {
+    0%, 100% { filter: drop-shadow(0 0 6px rgba(201,133,63,0.3)) drop-shadow(0 4px 14px rgba(0,0,0,0.5)); }
+    50%       { filter: drop-shadow(0 0 16px rgba(201,133,63,0.55)) drop-shadow(0 4px 18px rgba(0,0,0,0.5)); }
+  }
+
   /* ── LOGO / HEADLINE — single line, refined serif ── */
   .hero-headline {
     font-family: 'Playfair Display', Georgia, serif;
-    font-size: clamp(52px, 6.5vw, 96px);
+    font-size: clamp(42px, 5.4vw, 80px);
     font-weight: 900;
     line-height: 1;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.035em;
     color: var(--parchment);
-    margin-bottom: 28px;
-    opacity: 0;
-    animation: fadeUp 1s 0.25s ease forwards;
     white-space: nowrap;
+    margin: 0;
   }
 
   .hero-headline .amp {
     color: var(--crema);
     font-style: italic;
     font-weight: 400;
+    letter-spacing: -0.045em;
   }
 
   .hero-sub-rule {
     width: 48px;
     height: 1.5px;
     background: var(--crema);
-    margin-bottom: 28px;
+    margin-bottom: 22px;
+    margin-top: 18px;
     opacity: 0;
     animation: fadeUp 1s 0.35s ease forwards;
   }
 
   .hero-desc {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 300;
-    line-height: 1.7;
-    color: var(--parchment);
+    line-height: 1.78;
+    color: rgba(242,232,213,0.75);
     opacity: 0;
-    max-width: 380px;
-    margin-bottom: 52px;
+    max-width: 100%;
+    margin-bottom: 40px;
     animation: fadeUp 1s 0.4s ease forwards;
   }
 
   .hero-desc em { font-style: italic; color: var(--crema); }
 
   .hero-cta-group {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
     opacity: 0;
     animation: fadeUp 1s 0.55s ease forwards;
   }
@@ -106,17 +134,19 @@
   .btn-primary {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     background: var(--crema);
     color: var(--ink);
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.15em;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-style: italic;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     text-decoration: none;
-    padding: 16px 28px;
-    transition: all 0.25s;
-    border: 2px solid var(--crema);
+    padding: 18px 32px;
+    transition: all 0.3s;
+    border: 1.5px solid var(--crema);
     position: relative;
     overflow: hidden;
   }
@@ -138,20 +168,44 @@
   .btn-secondary {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
     background: transparent;
-    color: var(--parchment);
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.15em;
+    color: rgba(242,232,213,0.7);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-style: italic;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     text-decoration: none;
-    padding: 16px 28px;
-    border: 1.5px solid rgba(242,232,213,0.25);
-    transition: all 0.25s;
+    padding: 18px 32px;
+    border: 1.5px solid rgba(242,232,213,0.2);
+    transition: all 0.3s;
   }
 
-  .btn-secondary:hover { border-color: var(--crema); color: var(--crema); }
+  .btn-secondary:hover { border-color: rgba(201,133,63,0.55); color: var(--crema); }
+
+  /* Ghost placeholder buttons */
+  .btn-placeholder {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: transparent;
+    color: rgba(242,232,213,0.22);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 18px 32px;
+    border: 1px dashed rgba(242,232,213,0.1);
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .btn-placeholder:hover { border-color: rgba(201,133,63,0.2); color: rgba(201,133,63,0.3); }
 
   /* ── HERO RIGHT: Espresso Doctor Panel ── */
   .hero-visual {
@@ -872,18 +926,93 @@
 <!-- HERO -->
 <section class="hero">
   <div class="hero-text">
-    <h1 class="hero-headline">Grounds <span class="amp">&</span> Glory</h1>
+    <!-- Logo lockup: SVG mark + headline on same line -->
+    <div class="hero-logo-lockup">
+      <svg class="hero-logo-mark" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Deep ambient glow behind the whole mark -->
+          <filter id="glowFilter" x="-40%" y="-40%" width="180%" height="180%">
+            <feGaussianBlur stdDeviation="3.5" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <!-- Inner bean gradient: dark roast at base, lit from upper-left -->
+          <radialGradient id="lgBean" cx="34%" cy="26%" r="70%" gradientUnits="objectBoundingBox">
+            <stop offset="0%"   stop-color="#F0B97A"/>
+            <stop offset="30%"  stop-color="#C9853F"/>
+            <stop offset="70%"  stop-color="#8B4A1A"/>
+            <stop offset="100%" stop-color="#3D1A08"/>
+          </radialGradient>
+          <!-- Crema sheen overlay -->
+          <radialGradient id="lgSheen" cx="28%" cy="18%" r="55%" gradientUnits="objectBoundingBox">
+            <stop offset="0%"   stop-color="#F2E8D5" stop-opacity="0.32"/>
+            <stop offset="60%"  stop-color="#F2E8D5" stop-opacity="0.04"/>
+            <stop offset="100%" stop-color="#F2E8D5" stop-opacity="0"/>
+          </radialGradient>
+          <!-- Warm halo glow (rendered behind bean) -->
+          <radialGradient id="lgHalo" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="#C9853F" stop-opacity="0.28"/>
+            <stop offset="100%" stop-color="#C9853F" stop-opacity="0"/>
+          </radialGradient>
+          <!-- Crease shadow -->
+          <linearGradient id="lgCrease" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%"   stop-color="#0D0906" stop-opacity="0.55"/>
+            <stop offset="50%"  stop-color="#0D0906" stop-opacity="0.35"/>
+            <stop offset="100%" stop-color="#0D0906" stop-opacity="0.5"/>
+          </linearGradient>
+        </defs>
+
+        <!-- Ambient halo behind bean -->
+        <ellipse cx="30" cy="32" rx="22" ry="20" fill="url(#lgHalo)"/>
+
+        <!-- THE BEAN — a proper hand-drawn coffee bean silhouette, tilted ~15deg -->
+        <!-- Outer bean shell -->
+        <path d="
+          M30 7
+          C 22 7, 14 13, 13 22
+          C 12 29, 15 35, 20 40
+          C 23 44, 27 47, 30 47
+          C 33 47, 38 44, 41 40
+          C 46 35, 48 29, 47 22
+          C 46 13, 38 7, 30 7 Z"
+          fill="url(#lgBean)" filter="url(#glowFilter)"/>
+
+        <!-- Crema sheen layer -->
+        <path d="
+          M30 7
+          C 22 7, 14 13, 13 22
+          C 12 29, 15 35, 20 40
+          C 23 44, 27 47, 30 47
+          C 33 47, 38 44, 41 40
+          C 46 35, 48 29, 47 22
+          C 46 13, 38 7, 30 7 Z"
+          fill="url(#lgSheen)"/>
+
+        <!-- Bean crease — the iconic S-curve groove, deep and precise -->
+        <!-- Shadow side of crease -->
+        <path d="M26 10 C29 17, 29 24, 26 31 C24 35, 24 40, 27 46"
+              stroke="#0D0906" stroke-width="2.8" stroke-linecap="round" fill="none" opacity="0.5"/>
+        <!-- Light edge of crease (gives 3D groove illusion) -->
+        <path d="M27.5 10.5 C30.5 17, 30.5 24, 27.5 31 C25.5 35, 25.5 40, 28.5 46"
+              stroke="#F0B97A" stroke-width="0.9" stroke-linecap="round" fill="none" opacity="0.25"/>
+
+        <!-- Tiny specular highlight dot — upper left, like light catching a glossy surface -->
+        <ellipse cx="21" cy="16" rx="3.5" ry="2" fill="#F2E8D5" opacity="0.18" transform="rotate(-20 21 16)"/>
+      </svg>
+      <h1 class="hero-headline">Grounds <span class="amp">&</span> Glory</h1>
+    </div>
     <div class="hero-sub-rule"></div>
     <p class="hero-desc">
       Where the <em>science of extraction</em> meets the future of flavour.
       Deep dives into specialty coffee, fermentation frontiers,
-      AI-powered brewing tools, and the culture of craft.
+      AI-powered brewing tools, and the endlessly evolving culture of craft.
     </p>
     <div class="hero-cta-group">
-      <a href="https://raghavpunjwork-code.github.io/coffee-blog/" class="btn-primary" target="_blank">
-        <span>☕ Try Espresso Doctor</span>
+      <a href="https://raghavpunjwork-code.github.io/coffee-espresso-diagnosis/" class="btn-primary" target="_blank">
+        <span>Try Espresso Doctor</span>
       </a>
       <a href="#features" class="btn-secondary">Explore the Blog</a>
+      <span class="btn-placeholder">Coming Soon</span>
+      <span class="btn-placeholder">Coming Soon</span>
     </div>
   </div>
 
@@ -897,7 +1026,7 @@
     </div>
 
     <!-- Classy ghost button centred above the mockup -->
-    <a href="https://raghavpunjwork-code.github.io/coffee-blog/" class="diagnose-ghost-btn" target="_blank">
+    <a href="https://raghavpunjwork-code.github.io/coffee-espresso-diagnosis/" class="diagnose-ghost-btn" target="_blank">
       Diagnose my shot
       <svg width="14" height="14" viewBox="0 0 16 16" fill="none">
         <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1062,7 +1191,7 @@
       how it looked, the pull time, your dose. Our AI barista will diagnose your 
       espresso and tell you exactly how to fix it.
     </p>
-    <a href="https://raghavpunjwork-code.github.io/coffee-blog/" class="espresso-link" target="_blank">
+    <a href="https://raghavpunjwork-code.github.io/coffee-espresso-diagnosis/" class="espresso-link" target="_blank">
       Diagnose My Shot
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
         <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1198,7 +1327,7 @@
     <div class="footer-tagline">Coffee meets innovation, one shot at a time.</div>
   </div>
   <div class="footer-links">
-    <a href="https://raghavpunjwork-code.github.io/coffee-blog/" target="_blank">Espresso Doctor</a>
+    <a href="https://raghavpunjwork-code.github.io/coffee-espresso-diagnosis/" target="_blank">Espresso Doctor</a>
     <a href="#features">Blog</a>
     <a href="#features">About</a>
   </div>
